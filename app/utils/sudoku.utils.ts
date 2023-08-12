@@ -57,6 +57,14 @@ export const formatToArray = (puzzleString: string): SudokuCell[][] => {
   return result;
 };
 
+/**
+ * To check if the current value is
+ * @param sudoku sudoku to check against
+ * @param currentRow row of value to be checked
+ * @param currentCol col of value to be checked
+ * @param value new value inserted to the cell
+ * @returns true if the new value is a valid input
+ */
 export const checkIfInputIsValid = (
   sudoku: Sudoku,
   currentRow: number,
@@ -184,7 +192,7 @@ function solveSudoku(grid: Sudoku, row: number, col: number) {
     // Check if it is safe to place
     // the num (1-9)  in the given
     // row ,col ->we move to next column
-    if (isSafe(grid, row, col, num)) {
+    if (checkIfInputIsValid(grid, row, col, num)) {
       /*  assigning the num in the current
             (row,col)  position of the grid and
             assuming our assigned num in the position
@@ -202,36 +210,4 @@ function solveSudoku(grid: Sudoku, row: number, col: number) {
     grid.puzzle[row][col].value = null;
   }
   return false;
-}
-
-function isSafe(grid: Sudoku, row: number, col: number, num: number) {
-  // Check if we find the same num
-  // in the similar row , we
-  // return false
-  for (let x = 0; x <= 8; x++)
-    if (grid.puzzle[row][x].value === num) {
-      return false;
-    }
-  // Check if we find the same num
-  // in the similar column ,
-  // we return false
-  for (let x = 0; x <= 8; x++)
-    if (grid.puzzle[x][col].value === num) {
-      return false;
-    }
-  // Check if we find the same num
-  // in the particular 3*3
-  // matrix, we return false
-  let startRow = row - (row % 3),
-    startCol = col - (col % 3);
-
-  for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 3; j++) {
-      if (grid.puzzle[i + startRow][j + startCol].value === num) {
-        return false;
-      }
-    }
-  }
-
-  return true;
 }
