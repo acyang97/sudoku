@@ -3,8 +3,10 @@ import { GetSudokuResponse } from "@/app/interfaces/api-response.interface";
 
 import { NextResponse } from "next/server";
 
-// Follow up in the future: Make this type better
-// return a random response
+/**
+ * GET Method to retrieve all the puzzles in the db
+ * @returns returns all the puzzles with property id and puzzleString in the db
+ */
 export async function GET(): Promise<NextResponse<GetSudokuResponse>> {
   try {
     const { data, error } = await supabase.from("sudoku_puzzles").select();

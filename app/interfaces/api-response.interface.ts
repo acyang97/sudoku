@@ -1,6 +1,10 @@
+import { SudokuCell } from "./sudoku.interface";
+
 export interface GetSudokuResponse {
-  data: {
-    id: string;
-    puzzleString: string;
-  }[];
+  data: GetSudokuResponseEntry[];
+}
+
+export interface GetSudokuResponseEntry {
+  id: string;
+  puzzleString: string;
 }

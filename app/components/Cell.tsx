@@ -2,18 +2,20 @@
 
 import { ChangeEvent, useState } from "react";
 import { Sudoku, SudokuCell } from "../interfaces/sudoku.interface";
-import { checkIfInputIsValid } from "../utils/sudoku.utils";
+import { checkIfInputIsValid, validateSudoku } from "../utils/sudoku.utils";
 
 interface Props {
   sudokuCell: SudokuCell;
   currentSudoku: Sudoku;
   setCurrentSudoku: React.Dispatch<React.SetStateAction<Sudoku>>;
+  setGameSolved: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Cell: React.FC<Props> = ({
   sudokuCell,
   setCurrentSudoku,
   currentSudoku,
+  setGameSolved,
 }) => {
   const [isValid, setIsValid] = useState(true);
 
@@ -23,16 +25,15 @@ const Cell: React.FC<Props> = ({
     if (value && (value <= 0 || value > 9)) {
       return;
     }
-    setCurrentSudoku((prev) => {
-      let copy = { ...prev };
-      copy.puzzle[sudokuCell.row][sudokuCell.col] = {
-        ...copy.puzzle[sudokuCell.row][sudokuCell.col],
-        value,
-      };
-      return copy;
-    });
+    let copy = { ...currentSudoku };
+    copy.puzzle[sudokuCell.row][sudokuCell.col] = {
+      ...copy.puzzle[sudokuCell.row][sudokuCell.col],
+      value,
+    };
+    setCurrentSudoku(copy);
+    setGameSolved(validateSudoku(copy));
     setIsValid(
-      checkIfInputIsValid(currentSudoku, sudokuCell.row, sudokuCell.col, value)
+      checkIfInputIsValid(copy, sudokuCell.row, sudokuCell.col, value)
     );
   };
 

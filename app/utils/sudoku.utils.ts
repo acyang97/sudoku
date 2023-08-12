@@ -1,4 +1,26 @@
+import { GetSudokuResponseEntry } from "../interfaces/api-response.interface";
 import { Sudoku, SudokuCell } from "../interfaces/sudoku.interface";
+
+/**
+ *
+ * @param sudokus list of sudokus
+ * @param currentSudokuId an existing sudoku id if we want a sudoku that is different from the current one
+ * @returns a random sudoku with id and puzzleString property
+ */
+export const getRandomSudoku = (
+  sudokus: GetSudokuResponseEntry[],
+  currentSudokuId?: string
+): GetSudokuResponseEntry => {
+  if (currentSudokuId) {
+    let newSudokuId = currentSudokuId;
+    while (newSudokuId === currentSudokuId) {
+      newSudokuId = [...sudokus][Math.floor(sudokus.length * Math.random())].id;
+    }
+    return [...sudokus].find((sud) => sud.id === newSudokuId)!;
+  } else {
+    return [...sudokus][Math.floor(sudokus.length * Math.random())];
+  }
+};
 
 /**
  * @param puzzleString puzzle string from the db
@@ -79,16 +101,39 @@ export const checkIfInputIsValid = (
   return true;
 };
 
-export const getValidity = (sudoku: Sudoku) => {
-  for (let row = 0; row < 9; row++) {
-    for (let col = 0; col < 9; col++) {
-      const val = sudoku.puzzle[row][col].value;
-      console.log(
-        `row: ${row}, col: ${col}`,
-        checkIfInputIsValid(sudoku, row, col, val)
-      );
+export const validateSudoku = (sudoku: Sudoku) => {
+  if (sudoku.puzzle.some((row) => row.some((cell) => cell.value === null))) {
+    return false;
+  }
+  for (let i = 0; i < 9; i++) {
+    let row = new Set(),
+      col = new Set(),
+      box = new Set();
+
+    for (let j = 0; j < 9; j++) {
+      let _row = sudoku.puzzle[i][j].value;
+      let _col = sudoku.puzzle[j][i].value;
+      let _box =
+        sudoku.puzzle[3 * Math.floor(i / 3) + Math.floor(j / 3)][
+          3 * (i % 3) + (j % 3)
+        ].value;
+
+      if (_row !== null) {
+        if (row.has(_row)) return false;
+        row.add(_row);
+      }
+      if (_col !== null) {
+        if (col.has(_col)) return false;
+        col.add(_col);
+      }
+
+      if (_box !== null) {
+        if (box.has(_box)) return false;
+        box.add(_box);
+      }
     }
   }
+  return true;
 };
 
 // Sudoku solver copied from https://www.geeksforgeeks.org/sudoku-backtracking-7/
