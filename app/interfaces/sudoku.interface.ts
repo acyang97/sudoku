@@ -1,6 +1,6 @@
 export interface Sudoku {
   id: string;
-  sudoku: SudokuCell[][];
+  puzzle: SudokuCell[][];
 }
 
 export interface SudokuCell {
