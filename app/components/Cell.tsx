@@ -30,11 +30,11 @@ const Cell: React.FC<Props> = ({
       ...copy.puzzle[sudokuCell.row][sudokuCell.col],
       value,
     };
-    setCurrentSudoku(copy);
-    setGameSolved(validateSudoku(copy));
     setIsValid(
       checkIfInputIsValid(copy, sudokuCell.row, sudokuCell.col, value)
     );
+    setCurrentSudoku(copy);
+    setGameSolved(validateSudoku(copy));
   };
 
   return (

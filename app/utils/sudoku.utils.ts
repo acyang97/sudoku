@@ -73,6 +73,7 @@ export const checkIfInputIsValid = (
       continue;
     }
     if (sudoku.puzzle[currentRow][col].value === value) {
+      console.log("wrong when checking row");
       return false;
     }
   }
@@ -83,6 +84,7 @@ export const checkIfInputIsValid = (
       continue;
     }
     if (sudoku.puzzle[row][currentCol].value === value) {
+      console.log("wrong when checking col");
       return false;
     }
   }
@@ -92,7 +94,13 @@ export const checkIfInputIsValid = (
   let startCol = currentCol - (currentCol % 3);
   for (let row = 0; row < 3; row++) {
     for (let col = 0; col < 3; col++) {
-      if (sudoku.puzzle[row + startRow][col + startCol].value === value) {
+      const r = row + startRow;
+      const c = col + startCol;
+      if (r === currentRow && c === currentCol) {
+        continue;
+      }
+      if (sudoku.puzzle[r][c].value === value) {
+        console.log("wrong when checking mini box");
         return false;
       }
     }
