@@ -64,7 +64,7 @@ const Cell: React.FC<Props> = ({
           "focus:border-l-0",
           "focus:border-r-0",
           // show red underline for invalid inputs even if not on focus
-          !isValid && "focus:border-b-red-600 border-b-red-600",
+          !isValid && "focus:border-b-red-600 border-b-red-600 border-b-2",
           isValid && "focus:border-b-blue-500",
         ]
           .filter(Boolean)
