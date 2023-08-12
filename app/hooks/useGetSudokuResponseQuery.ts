@@ -4,6 +4,11 @@ import { GetSudokuResponse } from "../interfaces/api-response.interface";
 import { Sudoku } from "../interfaces/sudoku.interface";
 import { formatToArray, getRandomSudoku } from "../utils/sudoku.utils";
 
+/**
+ * Custom hook to fetch all the sudoku puzzles from the db
+ * @param setCurrentSudoku setState action to set a random sudoku on initial fetch of data
+ * @returns returns a react-query UseQueryResult
+ */
 const useGetSudokuResponseQuery = (
   setCurrentSudoku: React.Dispatch<React.SetStateAction<Sudoku>>
 ) => {

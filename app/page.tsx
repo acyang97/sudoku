@@ -12,7 +12,6 @@ import {
 import CustomButton from "./components/CustomButton";
 
 export default function Home() {
-  // States required for button implementations later
   const [resetCount, setResetCount] = useState(0);
   const [solveClickCount, setSolveClickCount] = useState(0);
   const [gameSolved, setGameSolved] = useState(false);

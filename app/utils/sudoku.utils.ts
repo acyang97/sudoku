@@ -58,7 +58,7 @@ export const formatToArray = (puzzleString: string): SudokuCell[][] => {
 };
 
 /**
- * To check if the current value is
+ * To check if the current value is valid
  * @param sudoku sudoku to check against
  * @param currentRow row of value to be checked
  * @param currentCol col of value to be checked
@@ -156,7 +156,9 @@ export const validateSudoku = (sudoku: Sudoku) => {
 let N = 9;
 
 /**
- * Handle case where puzzle cant solve
+ * Get answer of current sudoku to display it to user if he clicks "solve"
+ * @param sudoku sudoku to solve
+ * @returns a solved sudoku
  */
 export function solvePuzzle(sudoku: Sudoku) {
   solveSudoku(sudoku, 0, 0);
