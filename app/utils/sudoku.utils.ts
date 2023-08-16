@@ -2,7 +2,7 @@ import { GetSudokuResponseEntry } from "../interfaces/api-response.interface";
 import { Sudoku, SudokuCell } from "../interfaces/sudoku.interface";
 
 /**
- *
+ * Get a random sudoku from a list of sudokus
  * @param sudokus list of sudokus
  * @param currentSudokuId an existing sudoku id if we want a sudoku that is different from the current one
  * @returns a random sudoku with id and puzzleString property
@@ -81,7 +81,6 @@ export const checkIfInputIsValid = (
       continue;
     }
     if (sudoku.puzzle[currentRow][col].value === value) {
-      console.log("wrong when checking row");
       return false;
     }
   }
@@ -92,7 +91,7 @@ export const checkIfInputIsValid = (
       continue;
     }
     if (sudoku.puzzle[row][currentCol].value === value) {
-      console.log("wrong when checking col");
+      ("wrong when checking col");
       return false;
     }
   }
@@ -108,7 +107,6 @@ export const checkIfInputIsValid = (
         continue;
       }
       if (sudoku.puzzle[r][c].value === value) {
-        console.log("wrong when checking mini box");
         return false;
       }
     }
@@ -117,7 +115,12 @@ export const checkIfInputIsValid = (
   return true;
 };
 
-export const validateSudoku = (sudoku: Sudoku) => {
+/**
+ * To validate a completed sudoku
+ * @param sudoku sudoku to be validated
+ * @returns true if sudoku is completed and is correct else false
+ */
+export const validateSudoku = (sudoku: Sudoku): boolean => {
   if (sudoku.puzzle.some((row) => row.some((cell) => cell.value === null))) {
     return false;
   }
