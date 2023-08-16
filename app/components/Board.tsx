@@ -16,9 +16,12 @@ const Board: React.FC<Props> = ({
   setGameSolved,
 }) => {
   return (
-    <div className="flex justify-center flex-col border border-slate-500">
+    <div
+      className="flex flex-col justify-center items-center border border-slate-500 m-auto"
+      role="grid"
+    >
       {currentSudoku.puzzle.map((row, rowIndex) => (
-        <div key={rowIndex} className="flex">
+        <div key={rowIndex} className="flex" role="row">
           {row.map((item, colIndex) => (
             <Cell
               sudokuCell={item}

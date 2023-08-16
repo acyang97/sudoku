@@ -20,6 +20,9 @@ const Cell: React.FC<Props> = ({
   const [isValid, setIsValid] = useState(true);
 
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length >= 2) {
+      return;
+    }
     const value = e.target.value ? parseInt(e.target.value) : null;
     // don't update if value is out of range
     if (value && (value <= 0 || value > 9)) {
@@ -39,6 +42,7 @@ const Cell: React.FC<Props> = ({
 
   return (
     <div
+      role="gridcell"
       className={[
         "flex",
         "justify-center",
@@ -76,8 +80,26 @@ const Cell: React.FC<Props> = ({
         min={1}
         max={9}
         step={1}
-        value={sudokuCell.value ? sudokuCell.value : ""}
+        value={sudokuCell.value !== null ? sudokuCell.value : ""}
+        aria-valuenow={sudokuCell.value ? sudokuCell.value : 0}
+        aria-valuemin={1}
+        aria-valuemax={9}
         onChange={(e) => onChangeInput(e)}
+        onKeyDown={(e) => {
+          if (
+            e.code === "Minus" ||
+            e.code === "Period" ||
+            e.code === "Equal" ||
+            e.code === "Plus"
+          ) {
+            e.preventDefault();
+          }
+        }}
+        aria-label={`row: ${sudokuCell.row + 1}, column: ${
+          sudokuCell.col + 1
+        }, value: ${sudokuCell.value}`}
+        aria-invalid={!isValid}
+        role="spinbutton"
       />
     </div>
   );

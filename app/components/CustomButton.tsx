@@ -3,10 +3,16 @@
 interface Props {
   onClick: () => void;
   text: string;
+  ariaLabel: string;
   customStyles?: string;
 }
 
-const CustomButton: React.FC<Props> = ({ onClick, text, customStyles }) => {
+const CustomButton: React.FC<Props> = ({
+  onClick,
+  text,
+  ariaLabel,
+  customStyles,
+}) => {
   return (
     <button
       className={[
@@ -20,6 +26,7 @@ const CustomButton: React.FC<Props> = ({ onClick, text, customStyles }) => {
         .filter(Boolean)
         .join(" ")}
       onClick={onClick}
+      aria-label={ariaLabel}
     >
       {text}
     </button>
